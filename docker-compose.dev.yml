@@ -1,0 +1,10 @@
+version: '3'
+services:
+  db:
+    environment:
+      - POSTGRES_USER=foorumi
+      - POSTGRES_PASSWORD=kissa123
+      - POSTGRES_DB=foorumi
+    image: "harkkadb"
+    ports:
+      - "5432:5432"
