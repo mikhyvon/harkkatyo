@@ -9,4 +9,5 @@ public class MikkohyvApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MikkohyvApplication.class, args);
 	}
+
 }
