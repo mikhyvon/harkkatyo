@@ -1,4 +1,4 @@
-package fi.solita.harkka.mikkohyv;
+package fi.solita.harkka.mikkohyv.application;
 
 import org.junit.Assert;
 import org.junit.Test;
