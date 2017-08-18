@@ -24,6 +24,6 @@ public class TopicTests {
 
     @Test
     public void contextLoads() {
-
+        Assert.assertTrue(true);
     }
 }
