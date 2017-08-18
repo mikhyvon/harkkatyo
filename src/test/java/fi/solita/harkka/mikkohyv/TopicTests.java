@@ -14,20 +14,15 @@ public class TopicTests {
 
     @Test
     public void testSetTopic(){
-        try {
         MockTopicRepository topicRepo = new MockTopicRepository();
         GenerateTopicId topicId = new GenerateTopicId();
         Topic newTopic = new Topic(topicId.id, "Aihe");
         topicRepo.addTopic(newTopic);
 
-        Assert.assertTrue("Topic was set",topicRepo.findID(topicId.id)!= null);
-        } catch (Exception e) {
-            System.err.println("Caught IOException: " + e.getMessage());
-        }
+        Assert.assertTrue("Topic was not set",topicRepo.findID(topicId.id)!= null);
     }
 
     @Test
     public void contextLoads() {
-        Assert.assertTrue(true);
     }
 }
