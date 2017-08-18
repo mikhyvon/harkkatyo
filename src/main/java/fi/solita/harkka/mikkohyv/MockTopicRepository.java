@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-public class MockTopicRepository extends TopicRepository {
+public class MockTopicRepository extends GenericRepository<Topic> {
 
     public void addTopic(Topic topic){
         repositoryData.add(topic);

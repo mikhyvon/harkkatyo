@@ -14,7 +14,7 @@ public class TopicTests {
 
     @Test
     public void testSetTopic(){
-        TopicRepository topicRepo = new MockTopicRepository();
+        MockTopicRepository topicRepo = new MockTopicRepository();
         GenerateTopicId topicId = new GenerateTopicId();
         Topic newTopic = new Topic(topicId.id, "Aihe");
         topicRepo.addTopic(newTopic);

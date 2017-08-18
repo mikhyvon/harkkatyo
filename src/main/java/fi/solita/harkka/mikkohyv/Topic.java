@@ -1,10 +1,13 @@
 package fi.solita.harkka.mikkohyv;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 import java.util.UUID;
 
+@Entity
 public class Topic {
-
+    @Id
     private UUID id;
     private String topicName;
     private Date topicCreateDate;
