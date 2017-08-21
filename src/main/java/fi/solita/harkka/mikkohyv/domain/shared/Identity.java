@@ -1,5 +1,8 @@
 package fi.solita.harkka.mikkohyv.domain.shared;
 
+import org.hibernate.annotations.ColumnDefault;
+
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
@@ -8,6 +11,7 @@ import java.util.UUID;
 @Embeddable
 @MappedSuperclass
 public class Identity implements Serializable {
+    @Column(columnDefinition = "uuid")
     protected final UUID id;
 
     protected Identity() {

@@ -1,12 +1,15 @@
 package fi.solita.harkka.mikkohyv.domain.shared;
 
 import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 
-@Entity
+@MappedSuperclass
 public abstract class BaseEntity<I extends Identity> {
     @EmbeddedId
     private Identity id;
+
+    protected BaseEntity() {
+    }
 
     public BaseEntity(I id) {
         this.id = id;
