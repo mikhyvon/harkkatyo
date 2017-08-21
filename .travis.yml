@@ -1,12 +1,11 @@
 language: java
-services:
-  - postgresql
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+notifications:
+  slack:
+    secure: GxU0jmtv/rlOsmbcbfXcwenEcNrTgFCe3ZBfrjlL2RtuT2rcNNHU617wefBvTkNpKs6G3/bBjBUYmHkEpQSFwMLv/is2a/TvYWF3uUl0Cp90s9TuUYgx+XTqZc0LWSiIYT56S9XNnTnzWq3N9mwMwF29K3qr1m63rkJUqjGHVtKDkDyowWd9C8+KeIAmQJGmXxqm1aye02BwpEcJh5Cg+JLgUtYa6LOrmtJ2UUhH+VZ8Cz84IcjWWzZb9DbBbWIR8M8Jl6YflfJorkH2DsLMRsyQWAXPlf2DvGjLwmrCe9xpfMhoHJ73s9eo0rkZ0ZFNqd8+6JO4qWneN9u6cMfvi2ggVvgxPr7O+h+Cv7u1lzZkjCLKhexNoCkOtVISW+mAfAf58Y6qSDhq2UKu+OK8evHCF5Y0h46Caxrxbi+8a9ot/HrcBSSVm8DsI01+tQev2BMuKk5aaWMwbViHqUnkVfPhIsUT4VWN70zcEB+kcYd6awsTdoz53gxa5J/iCxUuklwKXHPkSc2wuS1G2x+mt/mkr3hzcIwu+3c/QW1z28Qlah9kEXyXJOeV38f4RsG7cJrHWYfBi0VB3cSs2hY+JQ8NKCuEQjnYYpBQws2WMyucMOOOOkzy2Z4hCp5Q/dr5nIOXvjWO23nnXjDtOH1XP66CdnRICsOL8XVn+TLOuKc=

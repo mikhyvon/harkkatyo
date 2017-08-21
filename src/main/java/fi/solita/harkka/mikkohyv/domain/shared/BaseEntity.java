@@ -15,6 +15,8 @@ public abstract class BaseEntity<I extends Identity> {
         this.id = id;
     }
 
+    // cast is okay since type parameter I must be subclass of Identity anyway
+    @SuppressWarnings("unchecked")
     public I getId() {
         return (I)id;
     }
