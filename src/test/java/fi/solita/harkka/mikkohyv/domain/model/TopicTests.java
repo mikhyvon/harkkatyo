@@ -45,8 +45,21 @@ public class TopicTests {
 
         Topic fetchedTopic = topicRepository.findById(topicId);
         assertNotNull(fetchedTopic);
-        System.out.println(fetchedTopic.createdDate());
         assertEquals(fetchedTopic.createdDate(), topicDate);
+    }
+
+    @Test
+    public void removeTopic_TopicIsRemoved_True(){
+        TopicId topicId = topicRepository.generateId();
+        Topic newTopic = new Topic(topicId, "Aihe");
+        Date topicDate = timeService.now();
+        newTopic.setCreatedDate(topicDate);
+        topicRepository.store(newTopic);
+
+        Topic fetchedTopic = topicRepository.findById(topicId);
+        assertNotNull(fetchedTopic);
+        topicRepository.delete(fetchedTopic);
+        assertNull(topicRepository.findById(topicId));
     }
 
     @Test

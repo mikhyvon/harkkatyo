@@ -2,18 +2,18 @@ package fi.solita.harkka.mikkohyv.domain.model;
 
 import fi.solita.harkka.mikkohyv.domain.shared.BaseEntity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.*;
-
-import static java.lang.System.in;
 
 @Entity
 public class Topic extends BaseEntity<TopicId> {
     private String name;
     private Date createdDate;
 
-    @OneToMany(mappedBy="messageTopic")
+    //TODO OprhanRemoval does not work
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy="messageTopic", orphanRemoval=true)
     private List<Message> messages;
 
     protected Topic() {

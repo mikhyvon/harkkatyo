@@ -38,4 +38,8 @@ public class Message extends BaseEntity<MessageId>{
     public void setCreatedDate(Date createdDate){
         this.createdDate = createdDate;
     }
+
+    public TopicId topicId(){
+        return messageTopic.getId();
+    }
 }

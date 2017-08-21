@@ -69,6 +69,32 @@ public class MessageTests {
     }
 
     @Test
+    public void removeMessages_MessagesAreRemoved_True(){
+        TopicId topicId = topicRepository.generateId();
+        Topic newTopic = new Topic(topicId, "Aihe");
+
+        MessageId messageId1 = messageRepository.generateId();
+        Message newMessage1 = new Message(messageId1, newTopic, "Viesti on pitkä");
+        messageRepository.store(newMessage1);
+        newTopic.addMessage(newMessage1);
+
+        MessageId messageId2 = messageRepository.generateId();
+        Message newMessage2 = new Message(messageId2, newTopic, "Viesti on vielä pitempi");
+        messageRepository.store(newMessage2);
+        newTopic.addMessage(newMessage2);
+
+        topicRepository.store(newTopic);
+
+        Topic fetchedTopic = topicRepository.findById(topicId);
+        assertNotNull(fetchedTopic);
+        topicRepository.delete(fetchedTopic);
+        assertNull(topicRepository.findById(topicId));
+        System.out.println(messageRepository.findById(messageId2).text());
+        assertNotNull(messageRepository.findById(messageId2));
+    }
+
+
+    @Test
     public void contextLoads() {
     }
 

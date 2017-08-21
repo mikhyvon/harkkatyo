@@ -14,4 +14,8 @@ public abstract class GenericMockRepository<I extends Identity, E extends BaseEn
     public void store(E entity) {
         store.put(entity.getId(), entity);
     }
+
+    @Override
+    public void delete(E entity) { store.remove(entity.getId(), entity); }
+
 }
