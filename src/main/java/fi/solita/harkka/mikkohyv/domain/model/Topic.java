@@ -22,11 +22,11 @@ public class Topic extends BaseEntity<TopicId> {
         return this.name;
     }
 
-    public long createdDate() {
-        return this.createdDate.getTime();
+    public Date createdDate() {
+        return this.createdDate;
     }
 
-    public void setCreatedDate(long createdDate){
-        this.createdDate = new Date(createdDate);
+    public void setCreatedDate(final Date createdDate){
+        this.createdDate = createdDate;
     }
 }
