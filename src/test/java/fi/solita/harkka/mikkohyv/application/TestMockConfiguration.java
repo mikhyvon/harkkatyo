@@ -1,5 +1,6 @@
 package fi.solita.harkka.mikkohyv.application;
 
+import fi.solita.harkka.mikkohyv.domain.model.MessageRepository;
 import fi.solita.harkka.mikkohyv.domain.model.TopicRepository;
 import fi.solita.harkka.mikkohyv.domain.shared.TimeService;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,12 @@ public class TestMockConfiguration {
     @Primary
     public TopicRepository topicRepository() {
         return new MockTopicRepository();
+    }
+
+    @Bean
+    @Primary
+    public MessageRepository messageRepository() {
+        return new MockMessageRepository();
     }
 
     @Bean
