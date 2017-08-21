@@ -34,4 +34,5 @@ dependencies {
 	runtime('com.zaxxer:HikariCP')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
+	testCompile group: 'org.hsqldb', name: 'hsqldb', version: '2.4.0'
 }
