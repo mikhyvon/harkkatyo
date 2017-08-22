@@ -14,7 +14,7 @@ public class Topic extends BaseEntity<TopicId> {
 
     //TODO OprhanRemoval does not work
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy="messageTopic", orphanRemoval=true)
-    private List<Message> messages;
+    private List<Message> messages = new ArrayList<>();
 
     protected Topic() {
     }
@@ -24,8 +24,13 @@ public class Topic extends BaseEntity<TopicId> {
         this.name = topicName;
     }
 
-    public String name() {
-        return this.name;
+    public String name() {  return this.name; }
+
+    public boolean updateName(String topicName){
+        if (messages.size() > 0)
+            return false;
+        this.name = topicName;
+        return true;
     }
 
     public Date createdDate() {
@@ -37,7 +42,6 @@ public class Topic extends BaseEntity<TopicId> {
     }
 
     public void addMessage(Message message) {
-        if(messages == null){ messages = new ArrayList<Message>(); }
         messages.add(message);
     }
 

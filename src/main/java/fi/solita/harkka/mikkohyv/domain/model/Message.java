@@ -31,6 +31,13 @@ public class Message extends BaseEntity<MessageId>{
         return this.text;
     }
 
+
+
+    public void updateMessageText(String messageText){
+        this.text = messageText;
+
+    }
+
     public Date createdDate() {
         return this.createdDate;
     }

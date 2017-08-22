@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -20,6 +21,9 @@ import static org.junit.Assert.*;
 public class TopicTests {
     @Autowired
     TopicRepository topicRepository;
+
+    @Autowired
+    MessageRepository messageRepository;
 
     @Autowired
     TimeService timeService;
@@ -33,6 +37,46 @@ public class TopicTests {
         Topic fetchedTopic = topicRepository.findById(topicId);
         assertNotNull(fetchedTopic);
         assertEquals(fetchedTopic.name(), "Aihe");
+    }
+
+    @Test
+    public void topicName_ChangeNameWhenTopicHasMessages_False(){
+        TopicId topicId = topicRepository.generateId();
+        Topic newTopic = new Topic(topicId, "Aihe");
+
+        MessageId messageId = messageRepository.generateId();
+        Message newMessage = new Message(messageId, newTopic, "Viesti on pitkä");
+        messageRepository.store(newMessage);
+        newTopic.addMessage(newMessage);
+
+        topicRepository.store(newTopic);
+
+        Topic fetchedTopic = topicRepository.findById(topicId);
+        List<Message> fetchedMessages = fetchedTopic.getMessage();
+        assertNotNull(fetchedMessages);
+        assertTrue("No messages found.",fetchedMessages.size() > 0);
+        assertFalse("TopicName didn't change", fetchedTopic.updateName("UusiAihe"));
+
+        Topic fetchedTopic2 = topicRepository.findById(topicId);
+        assertEquals("Topic is original","Aihe",fetchedTopic2.name());
+
+    }
+
+    @Test
+    public void topicName_ChangeNameWhenTopicHasNoMessages_True(){
+        TopicId topicId = topicRepository.generateId();
+        Topic newTopic = new Topic(topicId, "Aihe");
+
+        topicRepository.store(newTopic);
+
+        Topic fetchedTopic = topicRepository.findById(topicId);
+        List<Message> fetchedMessages = fetchedTopic.getMessage();
+        assertNotNull(fetchedMessages);
+        assertFalse("Messages found.",fetchedMessages.size() > 0);
+        assertTrue("TopicName was changed", fetchedTopic.updateName("UusiAihe"));
+
+       Topic fetchedTopic2 = topicRepository.findById(topicId);
+       assertNotEquals("Topic is not original","Aihe",fetchedTopic2.name());
     }
 
     @Test

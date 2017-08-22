@@ -28,19 +28,37 @@ public class MessageTests {
 
         TopicId topicId = topicRepository.generateId();
         Topic newTopic = new Topic(topicId, "Aihe");
+        topicRepository.store(newTopic);
 
+        Topic oldTopic = topicRepository.findById(topicId);
         MessageId messageId = messageRepository.generateId();
-        Message newMessage = new Message(messageId, newTopic, "Viesti on pitkä");
+        Message newMessage = new Message(messageId, oldTopic, "Viesti on pitkä");
         messageRepository.store(newMessage);
         newTopic.addMessage(newMessage);
 
-        topicRepository.store(newTopic);
-
-        assertTrue(true);
         Topic fetchedTopic = topicRepository.findById(topicId);
         List<Message> fetchedMessages = fetchedTopic.getMessage();
         assertNotNull(fetchedMessages);
         assertTrue("No messages found.",fetchedMessages.size() > 0);
+    }
+
+    @Test
+    public void messageText_ChangeMessage_True(){
+        TopicId topicId = topicRepository.generateId();
+        Topic newTopic = new Topic(topicId, "Aihe");
+        topicRepository.store(newTopic);
+
+        Topic oldTopic = topicRepository.findById(topicId);
+        MessageId messageId = messageRepository.generateId();
+        Message newMessage = new Message(messageId, oldTopic, "Viesti on pitkä");
+        messageRepository.store(newMessage);
+        newTopic.addMessage(newMessage);
+
+        Message oldMessage = messageRepository.findById(messageId);
+        oldMessage.updateMessageText("Viesti on uudempi");
+
+        Message changedMessage = messageRepository.findById(messageId);
+        assertNotEquals("MessageText is different", "Viesti on pitkä", changedMessage.text());
     }
 
     @Test
@@ -60,11 +78,9 @@ public class MessageTests {
 
         topicRepository.store(newTopic);
 
-        assertTrue(true);
         Topic fetchedTopic = topicRepository.findById(topicId);
         Message fetchedMessage = fetchedTopic.getMessageById(messageId2);
         assertNotNull(fetchedMessage);
-        System.out.println(fetchedMessage.text());
         assertEquals(fetchedMessage.text(), newMessage2.text());
     }
 
@@ -89,7 +105,7 @@ public class MessageTests {
         assertNotNull(fetchedTopic);
         topicRepository.delete(fetchedTopic);
         assertNull(topicRepository.findById(topicId));
-        System.out.println(messageRepository.findById(messageId2).text());
+        //TODO Does not work
         assertNotNull(messageRepository.findById(messageId2));
     }
 
