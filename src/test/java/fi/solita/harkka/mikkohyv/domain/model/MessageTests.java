@@ -1,5 +1,6 @@
 package fi.solita.harkka.mikkohyv.domain.model;
 
+import fi.solita.harkka.mikkohyv.domain.shared.TimeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -22,6 +24,9 @@ public class MessageTests {
 
     @Autowired
     TopicRepository topicRepository;
+
+    @Autowired
+    TimeService timeService;
 
     @Test
     public void messageText_AddMessage_True(){
@@ -105,8 +110,49 @@ public class MessageTests {
         assertNotNull(fetchedTopic);
         topicRepository.delete(fetchedTopic);
         assertNull(topicRepository.findById(topicId));
-        //TODO Does not work
+        //TODO Doesn't remove messages
         assertNotNull(messageRepository.findById(messageId2));
+    }
+
+    @Test
+    public void messageDate_MessagesArrangedByDate_True(){
+        TopicId topicId = topicRepository.generateId();
+        Topic newTopic = new Topic(topicId, "Aihe");
+
+        MessageId messageId1 = messageRepository.generateId();
+        Message newMessage1 = new Message(messageId1, newTopic, "aViesti on pitkä");
+        newMessage1.setCreatedDate(new Date(2017,6,6,6,22,22));
+        messageRepository.store(newMessage1);
+        newTopic.addMessage(newMessage1);
+
+        MessageId messageId2 = messageRepository.generateId();
+        Message newMessage2 = new Message(messageId2, newTopic, "bViesti on vielä pitempi");
+        newMessage2.setCreatedDate(new Date(2017,6,6,6,20,22));
+        messageRepository.store(newMessage2);
+        newTopic.addMessage(newMessage2);
+
+        MessageId messageId3 = messageRepository.generateId();
+        Message newMessage3 = new Message(messageId3, newTopic, "eViesti on vielä vielä pitempi");
+        newMessage3.setCreatedDate(new Date(2017,6,6,6,23,22));
+        messageRepository.store(newMessage3);
+        newTopic.addMessage(newMessage3);
+
+        MessageId messageId4 = messageRepository.generateId();
+        Message newMessage4 = new Message(messageId4, newTopic, "cViesti on vielä vielä vielä pitempi");
+        newMessage4.setCreatedDate(new Date(2017,6,6,6,21,22));
+        messageRepository.store(newMessage4);
+        newTopic.addMessage(newMessage4);
+
+
+        topicRepository.store(newTopic);
+
+        Topic fetchedTopic = topicRepository.findById(topicId);
+        assertNotNull(fetchedTopic);
+        for( Message vr : fetchedTopic.getMessage()) {
+            System.out.println(vr.createdDate() + " -- " + vr.text());
+        }
+        //TODO Doesn't work because of @OrderBy is not order correctly
+        //assertEquals("Second message is first", newMessage2, fetchedTopic.getMessage().get(0));
     }
 
 

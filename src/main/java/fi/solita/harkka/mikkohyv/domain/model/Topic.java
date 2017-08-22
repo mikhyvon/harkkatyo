@@ -1,6 +1,8 @@
 package fi.solita.harkka.mikkohyv.domain.model;
 
 import fi.solita.harkka.mikkohyv.domain.shared.BaseEntity;
+import org.hibernate.annotations.SortNatural;
+import javax.persistence.OrderBy;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,7 +14,9 @@ public class Topic extends BaseEntity<TopicId> {
     private String name;
     private Date createdDate;
 
-    //TODO OprhanRemoval does not work
+    //TODO OprhanRemoval and Orderby do not work.
+    @SortNatural
+    @OrderBy("createdDate ASC")
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy="messageTopic", orphanRemoval=true)
     private List<Message> messages = new ArrayList<>();
 
@@ -41,9 +45,7 @@ public class Topic extends BaseEntity<TopicId> {
         this.createdDate = createdDate;
     }
 
-    public void addMessage(Message message) {
-        messages.add(message);
-    }
+    public void addMessage(Message message) { messages.add(message); }
 
     public List<Message> getMessage() {
         return messages;
@@ -59,4 +61,5 @@ public class Topic extends BaseEntity<TopicId> {
         }
         return null;
     }
+
 }

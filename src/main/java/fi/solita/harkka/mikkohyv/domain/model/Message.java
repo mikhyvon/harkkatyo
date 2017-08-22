@@ -2,16 +2,14 @@ package fi.solita.harkka.mikkohyv.domain.model;
 
 import fi.solita.harkka.mikkohyv.domain.shared.BaseEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class Message extends BaseEntity<MessageId>{
 
     private String text;
+    @Column(name = "created_date")
     private Date createdDate;
 
     @ManyToOne(fetch= FetchType.LAZY)
@@ -38,13 +36,12 @@ public class Message extends BaseEntity<MessageId>{
 
     }
 
+
     public Date createdDate() {
         return this.createdDate;
     }
 
-    public void setCreatedDate(Date createdDate){
-        this.createdDate = createdDate;
-    }
+    public void setCreatedDate(final Date createdDate){  this.createdDate = createdDate; }
 
     public TopicId topicId(){
         return messageTopic.getId();
