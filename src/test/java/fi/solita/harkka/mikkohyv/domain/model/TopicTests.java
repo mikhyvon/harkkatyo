@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,7 @@ public class TopicTests {
     TimeService timeService;
 
     @Test
+    @Transactional
     public void topicName_NameIsCorrect_True() {
         TopicId topicId = topicRepository.generateId();
         Topic newTopic = new Topic(topicId, "Aihe");
@@ -40,6 +42,7 @@ public class TopicTests {
     }
 
     @Test
+    @Transactional
     public void topicName_ChangeNameWhenTopicHasMessages_False(){
         TopicId topicId = topicRepository.generateId();
         Topic newTopic = new Topic(topicId, "Aihe");
@@ -63,6 +66,7 @@ public class TopicTests {
     }
 
     @Test
+    @Transactional
     public void topicName_ChangeNameWhenTopicHasNoMessages_True(){
         TopicId topicId = topicRepository.generateId();
         Topic newTopic = new Topic(topicId, "Aihe");
@@ -80,6 +84,7 @@ public class TopicTests {
     }
 
     @Test
+    @Transactional
     public void createdDate_DateIsCorrect_True(){
         TopicId topicId = topicRepository.generateId();
         Topic newTopic = new Topic(topicId, "Aihe");
@@ -93,6 +98,7 @@ public class TopicTests {
     }
 
     @Test
+    @Transactional
     public void removeTopic_TopicIsRemoved_True(){
         TopicId topicId = topicRepository.generateId();
         Topic newTopic = new Topic(topicId, "Aihe");

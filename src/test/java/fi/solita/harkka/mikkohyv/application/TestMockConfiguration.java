@@ -14,12 +14,6 @@ import org.springframework.context.annotation.Profile;
 public class TestMockConfiguration {
     @Bean
     @Primary
-    public TopicRepository topicRepository() {
-        return new MockTopicRepository();
-    }
-
-    @Bean
-    @Primary
     public MessageRepository messageRepository() {
         return new MockMessageRepository();
     }
