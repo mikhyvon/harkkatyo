@@ -115,8 +115,7 @@ public class MessageTests {
         assertNotNull(fetchedTopic);
         topicRepository.delete(fetchedTopic);
         assertNull(topicRepository.findById(topicId));
-        //TODO Doesn't remove messages
-        assertNotNull(messageRepository.findById(messageId2));
+        assertNull(messageRepository.findById(messageId2));
     }
 
     @Test
@@ -155,10 +154,10 @@ public class MessageTests {
         Topic fetchedTopic = topicRepository.findById(topicId);
         assertNotNull(fetchedTopic);
         for( Message vr : fetchedTopic.getMessage()) {
-            System.out.println(vr.createdDate() + " -- " + vr.text());
+            System.out.println(vr.createdDate() + " -T- " + vr.text());
         }
         //TODO Doesn't work because of @OrderBy is not order correctly
-        //assertEquals("Second message is first", newMessage2, fetchedTopic.getMessage().get(0));
+        assertEquals("Second message is first", newMessage2, fetchedTopic.getMessage().get(0));
     }
 
 

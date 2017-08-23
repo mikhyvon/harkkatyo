@@ -8,7 +8,9 @@ import java.util.Date;
 @Entity
 public class Message extends BaseEntity<MessageId>{
 
+    @Column(name="text")
     private String text;
+
     @Column(name = "created_date")
     private Date createdDate;
 

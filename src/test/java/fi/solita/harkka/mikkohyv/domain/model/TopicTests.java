@@ -113,6 +113,30 @@ public class TopicTests {
     }
 
     @Test
+    @Transactional
+    public void topic_ListAllTopics_True(){
+        TopicId topicId3 = topicRepository.generateId();
+        Topic newTopic3 = new Topic(topicId3, "Aihe3");
+        newTopic3.setCreatedDate(new Date(2017,6,6,4,22,22));
+        topicRepository.store(newTopic3);
+
+        TopicId topicId1 = topicRepository.generateId();
+        Topic newTopic1 = new Topic(topicId1, "Aihe1");
+        newTopic1.setCreatedDate(new Date(2017,6,6,2,22,22));
+        topicRepository.store(newTopic1);
+
+        TopicId topicId2 = topicRepository.generateId();
+        Topic newTopic2 = new Topic(topicId2, "Aihe2");
+        newTopic2.setCreatedDate(new Date(2017,6,6,1,22,22));
+        topicRepository.store(newTopic2);
+
+        for(Topic t: topicRepository.listAll()){
+            System.out.println(t.name() + " -- " + t.createdDate());
+        }
+        assertTrue(topicRepository.listAll().size() == 3);
+    }
+
+    @Test
     public void contextLoads() {
     }
 
