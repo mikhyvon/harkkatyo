@@ -1,4 +1,4 @@
-package fi.solita.harkka.mikkohyv.application;
+package fi.solita.harkka.mikkohyv;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
