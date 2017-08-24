@@ -1,8 +1,7 @@
 package fi.solita.harkka.mikkohyv.domain.model;
 
 import fi.solita.harkka.mikkohyv.domain.shared.BaseEntity;
-
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
 public class User extends BaseEntity<UserId>{
@@ -31,12 +30,6 @@ public class User extends BaseEntity<UserId>{
         return false;
     }
 
-    public boolean checkUsernameAndPassword(String username, String password){
-        if (this.name.equals(username) && this.password.equals(password)){
-            return true;
-        }else{
-            return false;
-        }
-    }
+    public String role() { return this.role; }
 
 }

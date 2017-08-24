@@ -10,6 +10,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -30,7 +32,7 @@ public class UserTests {
     TimeService timeService;
 
     @Test
-    public void userName_UsernameIsCorrect_True(){
+    public void userName_UsernameIsCorrect_EqualsTrue(){
         UserId userId = userRepository.generateId();
         User newUser = new User(userId, "UusiKayttaja", "Admin", "salasana");
         userRepository.store(newUser);
@@ -51,11 +53,32 @@ public class UserTests {
     }
 
     @Test
-    public void userLogin_CheckIfUsernameAndPasswordExists_True(){
+    public void user_ListAllUsers_True(){
         UserId userId = userRepository.generateId();
         User newUser = new User(userId, "UusiKayttaja", "Admin", "salasana");
         userRepository.store(newUser);
-        //TODO No assertation yet, needs infra service
+
+        UserId userId2 = userRepository.generateId();
+        User newUser2 = new User(userId2, "UudempiKayttaja", "User", "salasana2");
+        userRepository.store(newUser2);
+
+        assertTrue(userRepository.listAll().size() == 2);
     }
+
+    @Test
+    public void userLogin_CheckUsernameAndPasswordAndReturnId_EqualsTrue(){
+        UserId userId = userRepository.generateId();
+        User newUser = new User(userId, "UusiKayttaja", "Admin", "salasana");
+        userRepository.store(newUser);
+
+        UserId userId2 = userRepository.generateId();
+        User newUser2 = new User(userId2, "UudempiKayttaja", "User", "salasana2");
+        userRepository.store(newUser2);
+
+        UserId fetchedUserId = userRepository.checkUsernameAndPassword("UudempiKayttaja", "salasana2");
+        assertNotNull(fetchedUserId);
+        assertEquals(userId2, fetchedUserId);
+    }
+
 
 }

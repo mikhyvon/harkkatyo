@@ -130,6 +130,113 @@ public class TopicTests {
     }
 
     @Test
+    public void topics_ViewAllTopicsByEssentialData_True(){
+        TopicId topicId3 = topicRepository.generateId();
+        Topic newTopic3 = new Topic(topicId3, "Aihe3");
+        newTopic3.setCreatedDate(new Date(2017,6,6,4,22,22));
+
+        MessageId messageId13 = messageRepository.generateId();
+        Message newMessage13 = new Message(messageId13, newTopic3, "aViesti on pitkä31");
+        newMessage13.setCreatedDate(new Date(2017,6,6,6,22,24));
+        messageRepository.store(newMessage13);
+        newTopic3.addMessage(newMessage13);
+
+        MessageId messageId23 = messageRepository.generateId();
+        Message newMessage23 = new Message(messageId23, newTopic3, "bViesti on vielä pitempi32");
+        newMessage23.setCreatedDate(new Date(2017,6,6,6,23,35));
+        messageRepository.store(newMessage23);
+        newTopic3.addMessage(newMessage23);
+
+        MessageId messageId33 = messageRepository.generateId();
+        Message newMessage33 = new Message(messageId33, newTopic3, "eViesti on vielä vielä pitempi33");
+        newMessage33.setCreatedDate(new Date(2017,6,6,6,25,46));
+        messageRepository.store(newMessage33);
+        newTopic3.addMessage(newMessage33);
+        topicRepository.store(newTopic3);
+
+        //---
+
+        TopicId topicId1 = topicRepository.generateId();
+        Topic newTopic1 = new Topic(topicId1, "Aihe1");
+        newTopic1.setCreatedDate(new Date(2017,6,6,2,21,22));
+
+        MessageId messageId11 = messageRepository.generateId();
+        Message newMessage11 = new Message(messageId11, newTopic1, "aViesti on pitkä14");
+        newMessage11.setCreatedDate(new Date(2017,6,6,6,25,44));
+        messageRepository.store(newMessage11);
+        newTopic1.addMessage(newMessage11);
+
+        topicRepository.store(newTopic1);
+
+        //---
+
+        TopicId topicId2 = topicRepository.generateId();
+        Topic newTopic2 = new Topic(topicId2, "Aihe2");
+        newTopic2.setCreatedDate(new Date(2017,6,6,1,23,22));
+
+        MessageId messageId12 = messageRepository.generateId();
+        Message newMessage12 = new Message(messageId12, newTopic2, "aViesti on pitkä21");
+        newMessage12.setCreatedDate(new Date(2017,6,6,6,24,33));
+        messageRepository.store(newMessage12);
+        newTopic2.addMessage(newMessage12);
+
+        MessageId messageId22 = messageRepository.generateId();
+        Message newMessage22 = new Message(messageId22, newTopic2, "bViesti on vielä pitempi22");
+        newMessage22.setCreatedDate(new Date(2017,6,6,6,23,55));
+        messageRepository.store(newMessage22);
+        newTopic2.addMessage(newMessage22);
+
+        topicRepository.store(newTopic2);
+
+
+        for(Topic t: topicRepository.listAll()){
+            System.out.println(t.name() + " -- " + t.createdDate() + " -- " + t.latestMessageDate());
+        }
+        assertTrue(topicRepository.listAll().size() == 3);
+    }
+
+    @Test
+    public void topicMessages_MessagesArrangedByDate_True(){
+        TopicId topicId = topicRepository.generateId();
+        Topic newTopic = new Topic(topicId, "Aihe");
+
+        MessageId messageId1 = messageRepository.generateId();
+        Message newMessage1 = new Message(messageId1, newTopic, "aViesti on pitkä");
+        newMessage1.setCreatedDate(new Date(2017,6,6,6,22,22));
+        messageRepository.store(newMessage1);
+        newTopic.addMessage(newMessage1);
+
+        MessageId messageId2 = messageRepository.generateId();
+        Message newMessage2 = new Message(messageId2, newTopic, "bViesti on vielä pitempi");
+        newMessage2.setCreatedDate(new Date(2017,6,6,6,20,22));
+        messageRepository.store(newMessage2);
+        newTopic.addMessage(newMessage2);
+
+        MessageId messageId3 = messageRepository.generateId();
+        Message newMessage3 = new Message(messageId3, newTopic, "eViesti on vielä vielä pitempi");
+        newMessage3.setCreatedDate(new Date(2017,6,6,6,23,22));
+        messageRepository.store(newMessage3);
+        newTopic.addMessage(newMessage3);
+
+        MessageId messageId4 = messageRepository.generateId();
+        Message newMessage4 = new Message(messageId4, newTopic, "cViesti on vielä vielä vielä pitempi");
+        newMessage4.setCreatedDate(new Date(2017,6,6,6,21,22));
+        messageRepository.store(newMessage4);
+        newTopic.addMessage(newMessage4);
+
+
+        topicRepository.store(newTopic);
+
+        Topic fetchedTopic = topicRepository.findById(topicId);
+        assertNotNull(fetchedTopic);
+        for( Message vr : fetchedTopic.getMessage()) {
+            System.out.println(vr.createdDate() + " | " + vr.text());
+        }
+        //TODO Doesn't work because of @OrderBy is not set correctly
+        assertEquals("Second message is first", newMessage2, fetchedTopic.getMessage().get(0));
+    }
+
+    @Test
     public void contextLoads() {
     }
 

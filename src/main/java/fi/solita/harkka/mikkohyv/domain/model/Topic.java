@@ -2,16 +2,14 @@ package fi.solita.harkka.mikkohyv.domain.model;
 
 import fi.solita.harkka.mikkohyv.domain.shared.BaseEntity;
 import org.hibernate.annotations.SortNatural;
-import javax.persistence.OrderBy;
-
 import javax.persistence.*;
-
 import java.util.*;
 
 @Entity
 public class Topic extends BaseEntity<TopicId> {
     private String name;
     private Date createdDate;
+    private Date latestMessageDate;
 
     @SortNatural
     @OrderBy("created_date DESC")
@@ -35,6 +33,10 @@ public class Topic extends BaseEntity<TopicId> {
         return true;
     }
 
+    public Date latestMessageDate() {
+        return this.latestMessageDate;
+    }
+
     public Date createdDate() {
         return this.createdDate;
     }
@@ -43,7 +45,10 @@ public class Topic extends BaseEntity<TopicId> {
         this.createdDate = createdDate;
     }
 
-    public void addMessage(Message message) { messages.add(message); }
+    public void addMessage(Message message) {
+        this.messages.add(message);
+        this.latestMessageDate = message.createdDate();
+    }
 
     @SortNatural
     @OrderBy("created_date DESC")

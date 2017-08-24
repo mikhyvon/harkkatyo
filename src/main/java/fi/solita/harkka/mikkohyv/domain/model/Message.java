@@ -7,11 +7,7 @@ import java.util.Date;
 
 @Entity
 public class Message extends BaseEntity<MessageId>{
-
-    @Column(name="text")
     private String text;
-
-    @Column(name = "created_date")
     private Date createdDate;
 
     @ManyToOne(fetch= FetchType.LAZY)
@@ -31,13 +27,10 @@ public class Message extends BaseEntity<MessageId>{
         return this.text;
     }
 
-
-
     public void updateMessageText(String messageText){
         this.text = messageText;
 
     }
-
 
     public Date createdDate() {
         return this.createdDate;
