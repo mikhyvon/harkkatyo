@@ -1,4 +1,4 @@
-package fi.solita.harkka.mikkohyv.application;
+package fi.solita.harkka.mikkohyv.infra;
 
 import fi.solita.harkka.mikkohyv.domain.model.Message;
 import fi.solita.harkka.mikkohyv.domain.model.MessageId;

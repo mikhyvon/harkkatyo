@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +15,8 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {fi.solita.harkka.mikkohyv.application.MikkohyvApplication.class})
 @SpringBootTest
+@Transactional
 @ActiveProfiles("test")
 public class MessageTests {
     @Autowired
@@ -30,7 +29,6 @@ public class MessageTests {
     TimeService timeService;
 
     @Test
-    @Transactional
     public void messageText_AddMessage_True(){
 
         TopicId topicId = topicRepository.generateId();
@@ -50,7 +48,6 @@ public class MessageTests {
     }
 
     @Test
-    @Transactional
     public void messageText_ChangeMessage_True(){
         TopicId topicId = topicRepository.generateId();
         Topic newTopic = new Topic(topicId, "Aihe");
@@ -70,7 +67,6 @@ public class MessageTests {
     }
 
     @Test
-    @Transactional
     public void messageText_IsCorrectText_True(){
         TopicId topicId = topicRepository.generateId();
         Topic newTopic = new Topic(topicId, "Aihe");
@@ -94,7 +90,6 @@ public class MessageTests {
     }
 
     @Test
-    @Transactional
     public void removeMessages_MessagesAreRemoved_True(){
         TopicId topicId = topicRepository.generateId();
         Topic newTopic = new Topic(topicId, "Aihe");
@@ -119,7 +114,6 @@ public class MessageTests {
     }
 
     @Test
-    @Transactional
     public void messageDate_MessagesArrangedByDate_True(){
         TopicId topicId = topicRepository.generateId();
         Topic newTopic = new Topic(topicId, "Aihe");
